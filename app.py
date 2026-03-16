@@ -8,7 +8,21 @@ def get_connection():
     return sqlite3.connect("model_portfolio.db")
 
 
-def calculate_portfolio():
+def get_clients():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    clients = cursor.execute("""
+    SELECT DISTINCT client_id
+    FROM client_holdings
+    """).fetchall()
+
+    conn.close()
+
+    return [c[0] for c in clients]
+
+
+def calculate_portfolio(client_id):
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -16,8 +30,8 @@ def calculate_portfolio():
     holdings = cursor.execute("""
     SELECT fund_id, fund_name, current_value
     FROM client_holdings
-    WHERE client_id='C001'
-    """).fetchall()
+    WHERE client_id=?
+    """, (client_id,)).fetchall()
 
     model = cursor.execute("""
     SELECT fund_id, allocation_pct
@@ -73,7 +87,10 @@ def calculate_portfolio():
 @app.route("/")
 def home():
 
-    data, total, buy, sell, cash = calculate_portfolio()
+    clients = get_clients()
+    client_id = request.args.get("client_id", clients[0])
+
+    data, total, buy, sell, cash = calculate_portfolio(client_id)
 
     return render_template(
         "index.html",
@@ -81,12 +98,17 @@ def home():
         total=total,
         buy=buy,
         sell=sell,
-        cash=cash
+        cash=cash,
+        clients=clients,
+        selected_client=client_id
     )
 
 
 @app.route("/holdings")
 def holdings():
+
+    clients = get_clients()
+    client_id = request.args.get("client_id", clients[0])
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -94,14 +116,20 @@ def holdings():
     rows = cursor.execute("""
     SELECT fund_name, current_value
     FROM client_holdings
-    WHERE client_id='C001'
-    """).fetchall()
+    WHERE client_id=?
+    """, (client_id,)).fetchall()
 
     total = sum(r[1] for r in rows)
 
     conn.close()
 
-    return render_template("holdings.html", rows=rows, total=total)
+    return render_template(
+        "holdings.html",
+        rows=rows,
+        total=total,
+        clients=clients,
+        selected_client=client_id
+    )
 
 
 @app.route("/history")
@@ -138,16 +166,11 @@ def edit():
         if f1 + f2 + f3 + f4 + f5 != 100:
             return "Allocations must equal 100%"
 
-        cursor.execute(
-            "UPDATE model_funds SET allocation_pct=? WHERE fund_id='F001'", (f1,))
-        cursor.execute(
-            "UPDATE model_funds SET allocation_pct=? WHERE fund_id='F002'", (f2,))
-        cursor.execute(
-            "UPDATE model_funds SET allocation_pct=? WHERE fund_id='F003'", (f3,))
-        cursor.execute(
-            "UPDATE model_funds SET allocation_pct=? WHERE fund_id='F004'", (f4,))
-        cursor.execute(
-            "UPDATE model_funds SET allocation_pct=? WHERE fund_id='F005'", (f5,))
+        cursor.execute("UPDATE model_funds SET allocation_pct=? WHERE fund_id='F001'", (f1,))
+        cursor.execute("UPDATE model_funds SET allocation_pct=? WHERE fund_id='F002'", (f2,))
+        cursor.execute("UPDATE model_funds SET allocation_pct=? WHERE fund_id='F003'", (f3,))
+        cursor.execute("UPDATE model_funds SET allocation_pct=? WHERE fund_id='F004'", (f4,))
+        cursor.execute("UPDATE model_funds SET allocation_pct=? WHERE fund_id='F005'", (f5,))
 
         conn.commit()
 

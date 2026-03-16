@@ -5,23 +5,48 @@
 
 <body>
 
-<h2>Amit Sharma Portfolio</h2>
+<h2>Client Portfolio Rebalancer</h2>
+
+<!-- Client Selection -->
+
+<form method="get">
+
+<label>Select Client:</label>
+
+<select name="client_id" onchange="this.form.submit()">
+
+{% for c in clients %}
+
+<option value="{{c}}" {% if c == selected_client %}selected{% endif %}>
+{{c}}
+</option>
+
+{% endfor %}
+
+</select>
+
+</form>
+
+<br>
 
 <a href="/">Comparison</a> |
-<a href="/holdings">Current Investments</a> |
+<a href="/holdings?client_id={{selected_client}}">Current Investments</a> |
 <a href="/history">History</a> |
 <a href="/edit">Edit Plan</a>
 
-<p>Total Portfolio Value: ₹{{total}}</p>
+<br><br>
+
+<p><b>Total Portfolio Value:</b> ₹{{total}}</p>
 
 <table border="1">
+
 <tr>
 <th>Fund</th>
 <th>Current %</th>
 <th>Target %</th>
 <th>Drift</th>
 <th>Action</th>
-<th>Amount</th>
+<th>Amount (₹)</th>
 </tr>
 
 {% for r in data %}
@@ -38,6 +63,8 @@
 {% endfor %}
 
 </table>
+
+<br>
 
 <h3>Summary</h3>
 
