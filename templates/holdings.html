@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Rebalancing History</title>
+</head>
+
+<body>
+
+<h2>Past Rebalancing Sessions</h2>
+
+<a href="/">Comparison</a> |
+<a href="/holdings">Current Investments</a> |
+<a href="/history">History</a> |
+<a href="/edit">Edit Plan</a>
+
+<table border="1">
+
+<tr>
+<th>Session ID</th>
+<th>Date</th>
+<th>Portfolio Value</th>
+<th>Status</th>
+</tr>
+
+{% for s in sessions %}
+
+<tr>
+<td>{{s[0]}}</td>
+<td>{{s[1]}}</td>
+<td>{{s[2]}}</td>
+<td>{{s[3]}}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>

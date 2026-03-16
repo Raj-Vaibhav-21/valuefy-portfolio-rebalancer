@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Edit Model Portfolio</title>
+</head>
+
+<body>
+
+<h2>Edit Recommended Plan</h2>
+
+<a href="/">Comparison</a> |
+<a href="/holdings">Current Investments</a> |
+<a href="/history">History</a> |
+<a href="/edit">Edit Plan</a>
+
+<form method="post">
+
+<table border="1">
+
+<tr>
+<th>Fund</th>
+<th>Target %</th>
+</tr>
+
+{% for f in funds %}
+
+<tr>
+<td>{{f[1]}}</td>
+<td>
+<input type="number" name="{{f[0]}}" value="{{f[2]}}">
+</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<button type="submit">Save and Recalculate</button>
+
+</form>
+
+</body>
+</html>
