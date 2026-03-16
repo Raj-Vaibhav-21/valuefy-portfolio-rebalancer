@@ -1,13 +1,93 @@
+<!DOCTYPE html>
 <html>
+
 <head>
 <title>Portfolio Rebalancer</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f5f7fb;
+    margin:40px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0px 4px 15px rgba(0,0,0,0.1);
+}
+
+h2{
+    margin-top:0;
+}
+
+nav{
+    margin-bottom:20px;
+}
+
+nav a{
+    margin-right:15px;
+    text-decoration:none;
+    color:#1a73e8;
+    font-weight:500;
+}
+
+nav a:hover{
+    text-decoration:underline;
+}
+
+select{
+    padding:6px;
+    border-radius:5px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th{
+    background:#1a73e8;
+    color:white;
+    padding:10px;
+    text-align:left;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #eee;
+}
+
+tr:hover{
+    background:#f3f6ff;
+}
+
+.summary{
+    margin-top:25px;
+    padding:15px;
+    background:#f3f6ff;
+    border-radius:8px;
+}
+
+.summary p{
+    margin:5px 0;
+    font-weight:500;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h2>Client Portfolio Rebalancer</h2>
+<div class="container">
 
-<!-- Client Selection -->
+<h2>Client Portfolio Rebalancer</h2>
 
 <form method="get">
 
@@ -29,16 +109,16 @@
 
 <br>
 
-<a href="/">Comparison</a> |
-<a href="/holdings?client_id={{selected_client}}">Current Investments</a> |
-<a href="/history">History</a> |
+<nav>
+<a href="/">Comparison</a>
+<a href="/holdings?client_id={{selected_client}}">Current Investments</a>
+<a href="/history">History</a>
 <a href="/edit">Edit Plan</a>
-
-<br><br>
+</nav>
 
 <p><b>Total Portfolio Value:</b> ₹{{total}}</p>
 
-<table border="1">
+<table>
 
 <tr>
 <th>Fund</th>
@@ -64,13 +144,17 @@
 
 </table>
 
-<br>
+<div class="summary">
 
 <h3>Summary</h3>
 
 <p>Total BUY: ₹{{buy}}</p>
 <p>Total SELL: ₹{{sell}}</p>
 <p>Fresh Money Needed: ₹{{cash}}</p>
+
+</div>
+
+</div>
 
 </body>
 </html>

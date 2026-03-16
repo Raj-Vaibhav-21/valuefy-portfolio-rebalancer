@@ -1,18 +1,79 @@
+<!DOCTYPE html>
 <html>
+
 <head>
 <title>Rebalancing History</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f5f7fb;
+    margin:40px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0px 4px 15px rgba(0,0,0,0.1);
+}
+
+nav{
+    margin-bottom:20px;
+}
+
+nav a{
+    margin-right:15px;
+    text-decoration:none;
+    color:#1a73e8;
+    font-weight:500;
+}
+
+nav a:hover{
+    text-decoration:underline;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#1a73e8;
+    color:white;
+    padding:10px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #eee;
+}
+
+tr:hover{
+    background:#f3f6ff;
+}
+
+</style>
+
 </head>
 
 <body>
 
+<div class="container">
+
 <h2>Past Rebalancing Sessions</h2>
 
-<a href="/">Comparison</a> |
-<a href="/holdings">Current Investments</a> |
-<a href="/history">History</a> |
+<nav>
+<a href="/">Comparison</a>
+<a href="/holdings">Current Investments</a>
+<a href="/history">History</a>
 <a href="/edit">Edit Plan</a>
+</nav>
 
-<table border="1">
+<table>
 
 <tr>
 <th>Session ID</th>
@@ -33,6 +94,8 @@
 {% endfor %}
 
 </table>
+
+</div>
 
 </body>
 </html>

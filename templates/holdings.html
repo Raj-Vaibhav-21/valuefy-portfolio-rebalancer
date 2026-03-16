@@ -1,38 +1,109 @@
+<!DOCTYPE html>
 <html>
+
 <head>
-<title>Rebalancing History</title>
+<title>Current Investments</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f5f7fb;
+    margin:40px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0px 4px 15px rgba(0,0,0,0.1);
+}
+
+nav{
+    margin-bottom:20px;
+}
+
+nav a{
+    margin-right:15px;
+    text-decoration:none;
+    color:#1a73e8;
+    font-weight:500;
+}
+
+nav a:hover{
+    text-decoration:underline;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th{
+    background:#1a73e8;
+    color:white;
+    padding:10px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #eee;
+}
+
+tr:hover{
+    background:#f3f6ff;
+}
+
+.summary{
+    margin-top:20px;
+    padding:15px;
+    background:#f3f6ff;
+    border-radius:8px;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h2>Past Rebalancing Sessions</h2>
+<div class="container">
 
-<a href="/">Comparison</a> |
-<a href="/holdings">Current Investments</a> |
-<a href="/history">History</a> |
+<h2>Current Investments</h2>
+
+<nav>
+<a href="/">Comparison</a>
+<a href="/holdings?client_id={{selected_client}}">Current Investments</a>
+<a href="/history">History</a>
 <a href="/edit">Edit Plan</a>
+</nav>
 
-<table border="1">
+<table>
 
 <tr>
-<th>Session ID</th>
-<th>Date</th>
-<th>Portfolio Value</th>
-<th>Status</th>
+<th>Fund</th>
+<th>Current Value (₹)</th>
 </tr>
 
-{% for s in sessions %}
+{% for r in rows %}
 
 <tr>
-<td>{{s[0]}}</td>
-<td>{{s[1]}}</td>
-<td>{{s[2]}}</td>
-<td>{{s[3]}}</td>
+<td>{{r[0]}}</td>
+<td>{{r[1]}}</td>
 </tr>
 
 {% endfor %}
 
 </table>
+
+<div class="summary">
+<p><b>Total Portfolio Value:</b> ₹{{total}}</p>
+</div>
+
+</div>
 
 </body>
 </html>
